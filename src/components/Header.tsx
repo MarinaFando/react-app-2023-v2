@@ -11,7 +11,6 @@ class Header extends React.Component<object, { path: string }> {
   }
 
   onLinkClick = (e) => {
-    e.preventDefault();
     this.setState({ path: e.target.pathname.slice(1) ? e.target.pathname.slice(1) : 'home' });
   };
 
