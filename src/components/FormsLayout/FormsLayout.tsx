@@ -2,7 +2,6 @@ import React from 'react';
 import UserList from '../UserList/UserList';
 import Form from '../Form';
 
-
 export interface User {
   id: number;
   firstName: string;
@@ -65,9 +64,9 @@ class FormsLayout extends React.Component {
   };
   render() {
     return (
-      <div class="form-layout">
+      <div className="form-layout">
         <Form addToUsersList={this.addToUsersList} />
-          <UserList usersList={this.state.usersList} />
+        <UserList usersList={this.state.usersList} />
       </div>
     );
   }

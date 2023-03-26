@@ -10,11 +10,11 @@ interface UserListProps {
 class UserList extends React.Component<UserListProps> {
   render() {
     return (
-        <div className="formcardlist__block--form ">
-          {this.props.usersList.map((user: User) => {
-            return <CardUser key={user.id} user={user} />;
-          })}
-        </div>
+      <div className="formcardlist__block--form ">
+        {this.props.usersList.map((user: User) => {
+          return <CardUser key={user.id} user={user} />;
+        })}
+      </div>
     );
   }
 }
