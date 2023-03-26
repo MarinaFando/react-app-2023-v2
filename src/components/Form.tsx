@@ -9,7 +9,6 @@ class Form extends React.Component<UserListProps> {
   handleSubmit: React.FormEventHandler<HTMLFormElement & FormFields> = (event) => {
     event.preventDefault();
     const form = event.currentTarget;
-    console.log(form);
     try {
       this.props.addToUsersList(form);
     } catch (error) {
