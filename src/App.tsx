@@ -4,6 +4,7 @@ import HomePage from './pages/Homepage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import Notfoundpage from './pages/NotfoundPage/Notfoundpage';
 import Header from './components/Header';
+import Form from './components/Form';
 
 export interface Sneaker {
   id: string;
@@ -85,6 +86,7 @@ class App extends React.Component {
         <Routes>
           <Route path="/" element={<HomePage items={this.state.items} />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/form" element={<Form />} />
           <Route path="/404" element={<Notfoundpage />} />
           <Route path="/*" element={<Navigate to="/404" replace />} />
         </Routes>

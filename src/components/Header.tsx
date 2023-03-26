@@ -18,16 +18,19 @@ class Header extends React.Component<object, { path: string }> {
   render() {
     return (
       <header className="header">
-        <Link to="/">
+        <Link className="header-link" to="/">
           <h1>Shopping mall</h1>
         </Link>
         <h2>{`${this.state.path} page`}</h2>
         <nav className="header-links">
-          <Link to="/" onClick={this.onLinkClick}>
+          <Link className="header-link" to="/" onClick={this.onLinkClick}>
             Home
           </Link>
-          <Link to="/about" onClick={this.onLinkClick}>
+          <Link className="header-link" to="/about" onClick={this.onLinkClick}>
             About
+          </Link>
+          <Link className="header-link" to="/form" onClick={this.onLinkClick}>
+            Form
           </Link>
         </nav>
       </header>
