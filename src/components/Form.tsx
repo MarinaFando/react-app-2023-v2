@@ -7,25 +7,20 @@ interface UserListProps {
 }
 const Form = ({addToUsersList}: UserListProps) => {
 
-  useEffect (() => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement & FormFields>) => {
         event.preventDefault();
         const form = event.currentTarget;
         try {
-          props.addToUsersList(form);
+          addToUsersList(form);
         } catch (error) {
           alert(error);
         }
         form.reset();
       };
-  }, [])
-
-
-
 
     return (
       <div className="form__container">
-        <form className="form" onSubmit={() => handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <div className="form__group">
             <label htmlFor="firstName">
               First Name:
