@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserList from '../UserList/UserList';
 import Form from '../Form';
 
@@ -31,11 +31,10 @@ export interface FormFields {
   agree: HTMLInputElement;
 }
 
-class FormsLayout extends React.Component {
-  state: Users = {
-    usersList: [],
-  };
-  addToUsersList = ({
+const FormsLayout = () => {
+  const [usersList, setUsersList] = useState<Users>([])
+
+  const addToUsersList = ({
     firstName,
     lastName,
     phoneNumber,
@@ -46,8 +45,7 @@ class FormsLayout extends React.Component {
     photo,
     agree,
   }: FormFields): void => {
-    const oldUsersList = this.state.usersList;
-    const user = {
+    const user: User = {
       id: Date.now() + Math.floor(Math.random() * 100),
       firstName: firstName.value,
       lastName: lastName.value,
@@ -59,17 +57,15 @@ class FormsLayout extends React.Component {
       photo: photo.value,
       agree: agree.value,
     };
-    this.setState({ usersList: [...oldUsersList, user] });
+    setUsersList([...usersList, user]);
     alert(`New user was added to list`);
   };
-  render() {
     return (
       <div className="form-layout">
-        <Form addToUsersList={this.addToUsersList} />
-        <UserList usersList={this.state.usersList} />
+        <Form addToUsersList={addToUsersList} />
+        <UserList usersList={usersList} />
       </div>
     );
-  }
 }
 
 export default FormsLayout;
