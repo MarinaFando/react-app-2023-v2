@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Form.css';
 import { FormFields } from '../FormsLayout';
 
 interface UserListProps {
   addToUsersList: (form: FormFields) => void;
 }
-class Form extends React.Component<UserListProps> {
-  handleSubmit: React.FormEventHandler<HTMLFormElement & FormFields> = (event) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    try {
-      this.props.addToUsersList(form);
-    } catch (error) {
-      alert(error);
-    }
-    form.reset();
-  };
+const Form = ({addToUsersList}: UserListProps) => {
 
-  render() {
+  useEffect (() => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement & FormFields>) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        try {
+          props.addToUsersList(form);
+        } catch (error) {
+          alert(error);
+        }
+        form.reset();
+      };
+  }, [])
+
+
+
+
     return (
       <div className="form__container">
-        <form className="form" onSubmit={this.handleSubmit}>
+        <form className="form" onSubmit={() => handleSubmit}>
           <div className="form__group">
             <label htmlFor="firstName">
               First Name:
@@ -95,7 +100,7 @@ class Form extends React.Component<UserListProps> {
         </form>
       </div>
     );
-  }
+
 }
 
 export default Form;
