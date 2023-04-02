@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/Homepage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
@@ -17,9 +17,8 @@ export interface Sneaker {
 type Sneakers = {
   items: Sneaker[];
 };
-class App extends React.Component {
-  state: Sneakers = {
-    items: [
+const App = () => {
+  const [items, setItems] = useState([
       {
         id: '7',
         parentId: '6',
@@ -76,15 +75,14 @@ class App extends React.Component {
         price: 123,
         imageUrl: 'img/sneakers/1.svg',
       },
-    ],
-  };
+    ])
 
-  render() {
+
     return (
       <div className="container">
         <Header />
         <Routes>
-          <Route path="/" element={<HomePage items={this.state.items} />} />
+          <Route path="/" element={<HomePage items={items} />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/form" element={<FormsLayout />} />
           <Route path="/404" element={<Notfoundpage />} />
@@ -92,7 +90,7 @@ class App extends React.Component {
         </Routes>
       </div>
     );
-  }
+
 }
 
 export default App;
