@@ -8,14 +8,13 @@ interface CardListProps {
   searchValue: string;
 }
 
-class CardList extends React.Component<CardListProps> {
-  render() {
+const CardList = ({ items, searchValue }: CardListProps) => {
     return (
       <section>
         <div className="cardlist__block">
-          {this.props.items.map((item) => {
+          {items.map((item) => {
             return (
-              item.title.toLowerCase().includes(this.props.searchValue.toLowerCase()) && (
+              item.title.toLowerCase().includes(searchValue.toLowerCase()) && (
                 <Card key={item.id} item={item} />
               )
             );
@@ -23,7 +22,6 @@ class CardList extends React.Component<CardListProps> {
         </div>
       </section>
     );
-  }
 }
 
 export default CardList;
