@@ -32,7 +32,7 @@ export interface FormFields {
 }
 
 const FormsLayout = () => {
-  const [usersList, setUsersList] = useState<Users>([])
+  const [usersList, setUsersList] = useState<Users>([]);
 
   const addToUsersList = ({
     firstName,
@@ -60,12 +60,12 @@ const FormsLayout = () => {
     setUsersList([...usersList, user]);
     alert(`New user was added to list`);
   };
-    return (
-      <div className="form-layout">
-        <Form addToUsersList={addToUsersList} />
-        <UserList usersList={usersList} />
-      </div>
-    );
-}
+  return (
+    <div className="form-layout">
+      <Form addToUsersList={addToUsersList} />
+      <UserList usersList={usersList} />
+    </div>
+  );
+};
 
 export default FormsLayout;

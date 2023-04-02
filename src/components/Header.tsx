@@ -6,7 +6,7 @@ const Header = () => {
   const [path, setPath] = useState('...');
 
   const onLinkClick = (e) => {
-    setPath( e.target.pathname.slice(1) || 'home');
+    setPath(e.target.pathname.slice(1) || 'home');
   };
 
   return (

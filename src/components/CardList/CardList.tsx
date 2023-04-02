@@ -9,19 +9,19 @@ interface CardListProps {
 }
 
 const CardList = ({ items, searchValue }: CardListProps) => {
-    return (
-      <section>
-        <div className="cardlist__block">
-          {items.map((item) => {
-            return (
-              item.title.toLowerCase().includes(searchValue.toLowerCase()) && (
-                <Card key={item.id} item={item} />
-              )
-            );
-          })}
-        </div>
-      </section>
-    );
-}
+  return (
+    <section>
+      <div className="cardlist__block">
+        {items.map((item) => {
+          return (
+            item.title.toLowerCase().includes(searchValue.toLowerCase()) && (
+              <Card key={item.id} item={item} />
+            )
+          );
+        })}
+      </div>
+    </section>
+  );
+};
 
 export default CardList;
