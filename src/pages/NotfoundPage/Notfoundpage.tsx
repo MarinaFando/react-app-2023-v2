@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/Notfound.css';
 
-class Notfoundpage extends React.Component {
-  render() {
+const Notfoundpage = () => {
     return (
       <section className="container-notfound">
         <h1>404</h1>
@@ -13,7 +12,6 @@ class Notfoundpage extends React.Component {
         <Link to="/">Click here to return to the main page</Link>
       </section>
     );
-  }
 }
 
 export default Notfoundpage;
