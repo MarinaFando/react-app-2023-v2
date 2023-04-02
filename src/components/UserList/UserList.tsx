@@ -7,16 +7,16 @@ interface UserListProps {
   usersList: User[];
 }
 
-class UserList extends React.Component<UserListProps> {
-  render() {
+const UserList = ({usersList<UserListProps>}) => {
+
     return (
       <div className="formcardlist__block--form ">
-        {this.props.usersList.map((user: User) => {
+        {usersList.map((user: User) => {
           return <CardUser key={user.id} user={user} />;
         })}
       </div>
     );
-  }
+
 }
 
 export default UserList;
