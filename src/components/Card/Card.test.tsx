@@ -11,7 +11,7 @@ describe('Card', () => {
     imageUrl: 'img/sneakers/6.svg',
   };
   it('renders Card component', () => {
-    render(<Card item={sneaker} />);
+    render(<Card {...sneaker} />);
     expect(screen.getByText(/Sneaker Black Edition/i)).toBeInTheDocument();
     expect(screen.getByText(/Price:/i)).toBeInTheDocument();
     expect(screen.getByText(/118/i)).toBeInTheDocument();

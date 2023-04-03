@@ -14,7 +14,7 @@ describe('FormsLayout', () => {
     expect(screen.getByDisplayValue(/Switzerland/i)).toBeInTheDocument();
     expect(screen.getByText(/Gender:/i)).toBeInTheDocument();
     expect(screen.getByDisplayValue(/female/i)).toBeInTheDocument();
-    expect(screen.getByText(/Photo/i)).toBeInTheDocument();
+    expect(screen.getByText(/Photo:/i)).toBeInTheDocument();
     expect(screen.getByRole('checkbox')).toBeInTheDocument();
     expect(screen.getByDisplayValue(/Submit/i)).toBeInTheDocument();
   });
