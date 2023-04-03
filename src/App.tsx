@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/Homepage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
@@ -15,8 +15,6 @@ export interface Sneaker {
 }
 
 const App = () => {
-  const [items, setItems] = useState();
-
   const sneakers = [
     {
       id: '7',
@@ -75,12 +73,12 @@ const App = () => {
       imageUrl: 'img/sneakers/1.svg',
     },
   ];
-  setItems(sneakers);
+
   return (
     <div className="container">
       <Header />
       <Routes>
-        <Route path="/" element={<HomePage items={items} />} />
+        <Route path="/" element={<HomePage items={sneakers} />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/form" element={<FormsLayout />} />
         <Route path="/404" element={<Notfoundpage />} />
