@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../styles/Header.css';
 
 const Header = () => {
   const [path, setPath] = useState('...');
+  const location = useLocation();
 
-  const onLinkClick = (e) => {
-    setPath(e.target.pathname.slice(1) || 'home');
-  };
+  useEffect(() => {
+    setPath(location.pathname);
+  }, [location]);
 
   return (
     <header className="header">
@@ -16,13 +18,13 @@ const Header = () => {
       </Link>
       <h2>{`${path} page`}</h2>
       <nav className="header-links">
-        <Link className="header-link" to="/" onClick={onLinkClick}>
+        <Link className="header-link" to="/">
           Home
         </Link>
-        <Link className="header-link" to="/about" onClick={onLinkClick}>
+        <Link className="header-link" to="/about">
           About
         </Link>
-        <Link className="header-link" to="/form" onClick={onLinkClick}>
+        <Link className="header-link" to="/form">
           Form
         </Link>
       </nav>
