@@ -15,7 +15,7 @@ const CardList = ({ items, searchValue }: CardListProps) => {
         {items.map((item) => {
           return (
             item.title.toLowerCase().includes(searchValue.toLowerCase()) && (
-              <Card key={item.id} item={item} />
+              <Card key={item.id} {...item} />
             )
           );
         })}

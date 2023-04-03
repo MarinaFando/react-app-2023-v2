@@ -6,12 +6,12 @@ export interface User {
   id: number;
   firstName: string;
   lastName: string;
-  phoneNumber: number;
+  phoneNumber: string;
   email: string;
   birthday: string;
   country: string;
   gender: string;
-  photo: Buffer;
+  photo: string;
   agree: boolean;
 }
 
@@ -47,15 +47,15 @@ const FormsLayout = () => {
   }: FormFields): void => {
     const user: User = {
       id: Date.now() + Math.floor(Math.random() * 100),
-      firstName: firstName.value,
-      lastName: lastName.value,
-      phoneNumber: phoneNumber.value,
-      email: email.value,
-      birthday: birthday.value,
-      country: country.value,
-      gender: gender.value,
-      photo: photo.value,
-      agree: agree.value,
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      birthday,
+      country,
+      gender,
+      photo,
+      agree,
     };
     setUsersList([...usersList, user]);
     alert(`New user was added to list`);
