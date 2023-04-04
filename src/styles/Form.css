@@ -67,3 +67,9 @@ input[type='checkbox'] {
   margin-top: 8px;
   filter: drop-shadow(2px 0px 4px #093321);
 }
+
+.error-message {
+  color: #ec7070;
+  font-size: 14px;
+  margin-top: 0;
+}
