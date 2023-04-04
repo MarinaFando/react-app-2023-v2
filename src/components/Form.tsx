@@ -8,16 +8,24 @@ interface UserListProps {
 }
 
 const Form = ({ addToUsersList }: UserListProps) => {
-  const { register, reset, handleSubmit, setValue, formState } = useForm<FormFields>({
+  const {
+    register,
+    reset,
+    handleSubmit,
+    setValue,
+    formState,
+    formState: { errors },
+  } = useForm<FormFields>({
     defaultValues: {
       firstName: '',
       lastName: '',
       phoneNumber: '',
       email: '',
-      country: 'Switzerland',
+      country: '',
       gender: '',
       photo: '',
     },
+    mode: 'onChange',
   });
 
   const onSubmit = (form: FormFields) => {
@@ -39,20 +47,24 @@ const Form = ({ addToUsersList }: UserListProps) => {
       reset();
     }
   }, [formState, reset]);
-
+  console.log(errors);
   return (
     <div className="form__container">
-      <form className="form" onSubmit={handleSubmit(onSubmit)}>
+      <form className="form" data-testid="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form__group">
           <label htmlFor="firstName">
             First Name:
             <input
               type="text"
-              {...register('firstName', {
-                required: 'this field is required',
-              })}
               id="firstName"
+              data-testid="firstName"
+              {...register('firstName', { required: true, minLength: 2 })}
             />
+            {errors.firstName && (
+              <p className="error-message">
+                This field is required and must be at least 2 characters long.
+              </p>
+            )}
           </label>
         </div>
         <div className="form__group">
@@ -60,11 +72,14 @@ const Form = ({ addToUsersList }: UserListProps) => {
             Last Name:
             <input
               type="text"
-              {...register('lastName', {
-                required: 'this field is required',
-              })}
               id="lastName"
+              {...register('lastName', { required: true, minLength: 2 })}
             />
+            {errors.lastName && (
+              <p className="error-message">
+                This field is required and must be at least 2 characters long.
+              </p>
+            )}
           </label>
         </div>
         <div className="form__group">
@@ -73,11 +88,14 @@ const Form = ({ addToUsersList }: UserListProps) => {
             <input
               type="tel"
               pattern="[0-9]{7,12}"
-              {...register('phoneNumber', {
-                required: 'this field is required',
-              })}
               id="phoneNumber"
+              {...register('phoneNumber', { required: true, pattern: /^\d{7}$/i })}
             />
+            {errors.phoneNumber && (
+              <p className="error-message">
+                This field is required and minimum length is 7 numbers.
+              </p>
+            )}
           </label>
         </div>
         <div className="form__group">
@@ -85,23 +103,21 @@ const Form = ({ addToUsersList }: UserListProps) => {
             Email:
             <input
               type="email"
-              {...register('email', {
-                required: 'this field is required',
-              })}
               id="email"
+              {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
             />
+            {errors.email && <p className="error-message">Please enter correct email.</p>}
           </label>
         </div>
         <div className="form__group">
           <label htmlFor="birthday">
             Birth date:
-            <input
-              type="date"
-              {...register('birthday', {
-                required: 'this field is required',
-              })}
-              id="birthday"
-            />
+            <input type="date" id="birthday" {...register('birthday', { required: true })} />
+            {errors.birthday && (
+              <p className="error-message">
+                This field is required. Please choose your birth date.
+              </p>
+            )}
           </label>
         </div>
         <div className="form__group">
@@ -109,16 +125,15 @@ const Form = ({ addToUsersList }: UserListProps) => {
             Country:
             <select
               className="form__group--country"
-              {...register('country', {
-                required: 'this field is required',
-              })}
               id="country"
-              defaultValue="Switzerland"
+              data-testid="country"
+              {...register('country', { required: true })}
             >
               <option value="Belgium">Belgium</option>
               <option value="France">France</option>
               <option value="Switzerland">Switzerland</option>
             </select>
+            {errors.country && <p className="error-message">Please select your country.</p>}
           </label>
         </div>
         <div className="form__group">
@@ -127,21 +142,16 @@ const Form = ({ addToUsersList }: UserListProps) => {
             <label htmlFor="male">
               <input
                 type="radio"
-                {...register('gender', {
-                  required: 'this field is required',
-                })}
+                {...register('gender', { required: true })}
                 value="male"
                 id="male"
-                defaultChecked
               />
               male
             </label>
             <label htmlFor="female">
               <input
                 type="radio"
-                {...register('gender', {
-                  required: 'this field is required',
-                })}
+                {...register('gender', { required: true })}
                 value="female"
                 id="female"
               />
@@ -150,29 +160,30 @@ const Form = ({ addToUsersList }: UserListProps) => {
             <label htmlFor="other">
               <input
                 type="radio"
-                {...register('gender', {
-                  required: 'this field is required',
-                })}
+                {...register('gender', { required: true })}
                 value="other"
                 id="other"
               />
               other
             </label>
           </fieldset>
+          {errors.gender && <p className="error-message">Please select your gender.</p>}
         </div>
         <div className="form__group">
           <label htmlFor="photo">Photo:</label>
-          <input type="file" onChange={handleFileChange} required />
+          <input
+            type="file"
+            {...register('photo', { required: true })}
+            onChange={handleFileChange}
+          />
+          {errors.photo && (
+            <p className="error-message">This field is required. Download your image file.</p>
+          )}
         </div>
         <div className="form__group">
-          <input
-            type="checkbox"
-            {...register('agree', {
-              required: 'this field is required',
-            })}
-            id="agreeCheckbox"
-          />
+          <input type="checkbox" {...register('agree', { required: true })} id="agreeCheckbox" />
           <label htmlFor="agree">I agree with using my personal information</label>
+          {errors.agree && <p className="error-message">Please accept our requirements.</p>}
         </div>
         <input type="submit" value="Submit" id="submit" />
       </form>
