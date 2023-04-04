@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import HomePage from './pages/Homepage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import Notfoundpage from './pages/NotfoundPage/Notfoundpage';
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import FormsLayout from './components/FormsLayout/FormsLayout';
 import sneakers from './data';
 

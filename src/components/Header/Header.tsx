@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import '../styles/Header.css';
+import '../../styles/Header.css';
 
 const Header = () => {
   const [path, setPath] = useState('...');
@@ -12,7 +12,7 @@ const Header = () => {
   }, [location]);
 
   return (
-    <header className="header">
+    <header className="header" data-testid="header">
       <Link className="header-link" to="/">
         <h1>Shopping mall</h1>
       </Link>
