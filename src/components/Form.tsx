@@ -89,11 +89,11 @@ const Form = ({ addToUsersList }: UserListProps) => {
               type="tel"
               pattern="[0-9]{7,12}"
               id="phoneNumber"
-              {...register('phoneNumber', { required: true, pattern: /^\d{7}$/i })}
+              {...register('phoneNumber', { required: true, pattern: /^\d{7,12}$/i })}
             />
             {errors.phoneNumber && (
               <p className="error-message">
-                This field is required and minimum length is 7 numbers.
+                This field is required and should contain from 7 to 12 numbers.
               </p>
             )}
           </label>
@@ -171,11 +171,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
         </div>
         <div className="form__group">
           <label htmlFor="photo">Photo:</label>
-          <input
-            type="file"
-            {...register('photo', { required: true })}
-            onChange={handleFileChange}
-          />
+          <input type="file" onChange={handleFileChange} required />
           {errors.photo && (
             <p className="error-message">This field is required. Download your image file.</p>
           )}
