@@ -1,12 +1,35 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/SearchPanel.css';
 
 interface SearchPanelProps {
-  searchValue: string;
-  onSearchValueChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  fetchAndSetData: (searchValue: string) => void;
+  changeIsLoaded: () => void;
 }
 
-const SearchPanel = ({ searchValue, onSearchValueChange }: SearchPanelProps) => {
+const SearchPanel = ({
+  fetchAndSetData,
+  changeIsLoaded,
+}: SearchPanelProps) => {
+
+const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+
+useEffect(() => {
+  return () => {
+    localStorage.setItem('searchValue', searchValue);
+  };
+}, [fetchAndSetData]);
+
+const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  if (event.code === 'Enter') {
+    changeIsLoaded();
+    fetchAndSetData(searchValue);
+  }
+};
+
+const onSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setSearchValue(e.target.value);
+};
+
   return (
     <section className="block">
       <div className="search__block">
@@ -17,6 +40,7 @@ const SearchPanel = ({ searchValue, onSearchValueChange }: SearchPanelProps) => 
           placeholder="Search..."
           value={searchValue}
           onChange={onSearchValueChange}
+          onKeyPress={handleKeyDown}
         />
       </div>
     </section>
