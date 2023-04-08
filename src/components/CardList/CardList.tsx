@@ -1,23 +1,14 @@
 import React from 'react';
-import { Sneaker } from '../../App';
+import { Character } from '../../caracterModel';
 import Card from '../Card/Card';
 import '../../styles/CardList.css';
 
-interface CardListProps {
-  items: Sneaker[];
-  searchValue: string;
-}
-
-const CardList = ({ items, searchValue }: CardListProps) => {
+const CardList = ({characters}: Character[]) => {
   return (
     <section>
       <div className="cardlist__block">
-        {items.map((item) => {
-          return (
-            item.title.toLowerCase().includes(searchValue.toLowerCase()) && (
-              <Card key={item.id} {...item} />
-            )
-          );
+        {characters.map((character: Character) => {
+          return <Card key={character.id} {...character} />;
         })}
       </div>
     </section>
