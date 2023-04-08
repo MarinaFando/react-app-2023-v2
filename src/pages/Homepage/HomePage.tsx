@@ -16,8 +16,8 @@ const HomePage = () => {
       .then((res) => res.json())
       .then((characters) => {
         setCharacters(characters.results);
-        setIsLoaded(true)
-    });
+        setIsLoaded(true);
+      });
   };
 
   const changeIsLoaded = () => {
@@ -26,14 +26,11 @@ const HomePage = () => {
 
   return (
     <section>
-      <SearchPanel
-        fetchAndSetData={fetchAndSetData}
-        changeIsLoaded={changeIsLoaded}
-      />
+      <SearchPanel fetchAndSetData={fetchAndSetData} changeIsLoaded={changeIsLoaded} />
       {!isLoaded ? (
         <div className="cardlist__block">Loading...</div>
       ) : (
-        <CardList characters={characters}/>
+        <CardList characters={characters} />
       )}
     </section>
   );

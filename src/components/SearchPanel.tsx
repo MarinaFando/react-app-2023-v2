@@ -6,18 +6,14 @@ interface SearchPanelProps {
   changeIsLoaded: () => void;
 }
 
-const SearchPanel = ({
-  fetchAndSetData,
-  changeIsLoaded,
-}: SearchPanelProps) => {
-
+const SearchPanel = ({ fetchAndSetData, changeIsLoaded }: SearchPanelProps) => {
 const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
 useEffect(() => {
   return () => {
     localStorage.setItem('searchValue', searchValue);
   };
-}, [fetchAndSetData]);
+}, [searchValue]);
 
 const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
   if (event.code === 'Enter') {
