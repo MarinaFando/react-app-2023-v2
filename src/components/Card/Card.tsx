@@ -1,19 +1,19 @@
 import React from 'react';
-import { Sneaker } from '../../App';
+import { Character } from '../../caracterModel';
 import '../../styles/Card.css';
 
-const Card = ({ title, price, imageUrl }: Sneaker) => {
+const Card = ({ image, name, species, status, gender }: Character) => {
   return (
     <div className="card">
-      <div className="card__favorite">
-        <img src="img/liked.svg" alt="Liked item" />
-      </div>
-      <img width="133" height="112" src={imageUrl} alt="Sneakers" />
-      <h4>{title}</h4>
+      <img width="200" src={image} alt="Character" />
+      <h2>{name}</h2>
       <div className="card__bottom">
-        <div className="card__bottom-price">
-          <span>Price:</span>
-          <b>{price}$</b>
+        <div>
+          <ul className="card__bottom-info">
+            <li>Species: {species}</li>
+            <li>Status: {status}</li>
+            <li>Gender: {gender}</li>
+          </ul>
         </div>
         <button className="card__bottom-button" type="button">
           Add to cart
