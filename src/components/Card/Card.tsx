@@ -2,9 +2,22 @@ import React from 'react';
 import { Character } from '../../caracterModel';
 import '../../styles/Card.css';
 
-const Card = ({ image, name, species, status, gender }: Character) => {
+interface CardProps {
+  character: Character;
+  openModalCard: () => void;
+  setCharacter: (character: Character) => void;
+}
+
+const Card = ({ character, openModalCard, setCharacter }: CardProps) => {
+  const { image, name, species, status, gender } = character;
+
+  const onSetCard = () => {
+    setCharacter(character);
+    openModalCard();
+  };
+
   return (
-    <div className="card">
+    <div className="card" onClick={onSetCard}>
       <img width="200" src={image} alt="Character" />
       <h2>{name}</h2>
       <div className="card__bottom">
