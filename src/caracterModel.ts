@@ -1,6 +1,3 @@
-import Header from '../Header';
-import '../../styles/ComponentsLayout.css';
-
 export interface Character {
   id: number;
   name: string;
