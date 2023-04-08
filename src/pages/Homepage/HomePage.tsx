@@ -1,29 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import SearchPanel from '../../components/SearchPanel';
-import { Sneaker } from '../../App';
+import { Character } from '../../caracterModel';
 import CardList from '../../components/CardList/CardList';
 
-interface HomePageProps {
-  items: Sneaker[];
-}
-
-const HomePage = ({ items }: HomePageProps) => {
-  const [searchValue, setSearchValue] = useState<string>(localStorage.getItem('searchValue') || '');
+const HomePage = () => {
+  const [characters, setCharacters] = useState<Character[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    return () => {
-      localStorage.setItem('searchValue', searchValue);
-    };
-  }, [searchValue]);
+    fetchAndSetData();
+  }, []);
 
-  const onSearchValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
+  const fetchAndSetData = (searchValue = '') => {
+    fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
+      .then((res) => res.json())
+      .then((characters) => {
+        setCharacters(characters.results);
+        setIsLoaded(true)
+    });
+  };
+
+  const changeIsLoaded = () => {
+    setIsLoaded(false);
   };
 
   return (
     <section>
-      <SearchPanel searchValue={searchValue} onSearchValueChange={onSearchValueChange} />
-      <CardList items={items} searchValue={searchValue} />
+      <SearchPanel
+        fetchAndSetData={fetchAndSetData}
+        changeIsLoaded={changeIsLoaded}
+      />
+      {!isLoaded ? (
+        <div className="cardlist__block">Loading...</div>
+      ) : (
+        <CardList characters={characters}/>
+      )}
     </section>
   );
 };
