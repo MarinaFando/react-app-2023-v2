@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import HomePage from './HomePage';
+import fetch from 'node-fetch';
 
 const localStorageMock = (function () {
-  const store: Store = {};
+  let store: Store = {};
 
   return {
     getItem(key: string) {
@@ -13,42 +14,60 @@ const localStorageMock = (function () {
     setItem(key: string, value: string) {
       store[key] = value;
     },
+    clear() {
+      store = {};
+    },
   };
 })();
 
+beforeEach(async () => {
+  await localStorage.clear();
+});
+
 describe('HomePage', () => {
-  Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-
+  beforeEach(() => {
+    global.fetch = fetch;
+  });
   it('save data in local storage', async () => {
-    const list = [
-      {
-        id: '10',
-        parentId: 3,
-        title: 'Sneaker Nike Blazer Mid Suede',
-        price: 164,
-        imageUrl: 'img/sneakers/3.svg',
-      },
-      {
-        id: '11',
-        parentId: 4,
-        title: 'Sneaker Puma X Aka Boku Future Rider',
-        price: 123,
-        imageUrl: 'img/sneakers/4.svg',
-      },
-      {
-        id: '12',
-        parentId: 1,
-        title: 'Sneaker Nike Blazer Mid Suede',
-        price: 100,
-        imageUrl: 'img/sneakers/1.svg',
-      },
-    ];
-
-    const { unmount } = render(<HomePage items={list} />);
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
+    const { unmount } = render(<HomePage />);
     const inputField = screen.getByPlaceholderText(/Search.../i);
     expect(inputField).toBeInTheDocument();
-    fireEvent.change(inputField, { target: { value: 'sneaker' } });
+    fireEvent.change(inputField, { target: { value: 'Naruto' } });
+    fireEvent.keyPress(inputField, { key: 'enter', keyCode: 13 });
     unmount();
-    expect(await localStorage.getItem('searchValue')).toBe('sneaker');
+    waitFor(() => {
+      expect(localStorage.getItem('searchValue')).toBe('Naruto');
+    });
+  });
+
+  it('check all cards render', async () => {
+    const { container } = await render(<HomePage />);
+    const buttons = await screen.findAllByRole('button');
+    expect(buttons.length).toBeGreaterThan(0);
+    const cards = container.getElementsByClassName('card');
+    expect(cards.length).toBe(buttons.length);
+    expect(await screen.queryByAltText('close window')).not.toBeInTheDocument();
+  });
+
+  it('check opening and closing modal window', async () => {
+    const { container } = await render(<HomePage />);
+    await screen.findAllByRole('button');
+    const cards = container.getElementsByClassName('card');
+    fireEvent.click(cards[0]);
+    const closeButton = await screen.findByAltText('close window');
+    expect(closeButton).toBeInTheDocument();
+    fireEvent.click(closeButton);
+    expect(await screen.queryByAltText('close window')).not.toBeInTheDocument();
+  });
+
+  it('check opening and closing modal window by clicking outside', async () => {
+    const { container } = await render(<HomePage />);
+    await screen.findAllByRole('button');
+    const cards = container.getElementsByClassName('card');
+    fireEvent.click(cards[0]);
+    const outsideModal = await container.getElementsByClassName('display__block');
+    fireEvent.click(outsideModal[0]);
+    expect(await screen.queryByAltText('close window')).not.toBeInTheDocument();
   });
 });
