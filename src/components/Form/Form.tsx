@@ -29,7 +29,6 @@ const Form = ({ addToUsersList }: UserListProps) => {
   });
 
   const onSubmit = (form: FormFields) => {
-      console.log(form);
     try {
       addToUsersList(form);
     } catch (error) {
@@ -116,7 +115,12 @@ const Form = ({ addToUsersList }: UserListProps) => {
         <div className="form__group">
           <label htmlFor="birthday">
             Birth date:
-            <input type="date" id="birthday" data-testid="birthday" {...register('birthday', { required: true })} />
+            <input
+              type="date"
+              id="birthday"
+              data-testid="birthday"
+              {...register('birthday', { required: true })}
+            />
             {errors.birthday && (
               <p className="error-message">
                 This field is required. Please choose your birth date.
@@ -176,7 +180,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
         </div>
         <div className="form__group">
           <label htmlFor="photo">Photo:</label>
-          <input type="file" onChange={handleFileChange} required id="photo" data-testid="photo"/>
+          <input type="file" onChange={handleFileChange} required id="photo" data-testid="photo" />
           {errors.photo && (
             <p className="error-message">This field is required. Download your image file.</p>
           )}
