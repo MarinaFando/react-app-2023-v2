@@ -8,7 +8,7 @@ const HomePage = () => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchAndSetData();
+    fetchAndSetData(localStorage.getItem('searchValue') || '');
   }, []);
 
   const fetchAndSetData = (searchValue = '') => {

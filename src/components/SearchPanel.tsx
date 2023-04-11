@@ -7,24 +7,25 @@ interface SearchPanelProps {
 }
 
 const SearchPanel = ({ fetchAndSetData, changeIsLoaded }: SearchPanelProps) => {
-const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
 
-useEffect(() => {
-  return () => {
-    localStorage.setItem('searchValue', searchValue);
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchValue', searchValue);
+    };
+  }, [searchValue]);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.code === 'Enter') {
+      changeIsLoaded();
+      localStorage.setItem('searchValue', searchValue);
+      fetchAndSetData(searchValue);
+    }
   };
-}, [searchValue]);
 
-const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  if (event.code === 'Enter') {
-    changeIsLoaded();
-    fetchAndSetData(searchValue);
-  }
-};
-
-const onSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  setSearchValue(e.target.value);
-};
+  const onSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <section className="block">
