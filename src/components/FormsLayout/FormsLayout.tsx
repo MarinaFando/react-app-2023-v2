@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import UserList from '../UserList/UserList';
-import Form from '../Form';
+import Form from '../Form/Form';
 
 export interface User {
   id: number;

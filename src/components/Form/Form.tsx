@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import '../styles/Form.css';
+import '../../styles/Form.css';
 import { FormFields } from '../FormsLayout';
 import { useForm } from 'react-hook-form';
 
@@ -29,6 +29,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
   });
 
   const onSubmit = (form: FormFields) => {
+      console.log(form);
     try {
       addToUsersList(form);
     } catch (error) {
@@ -73,6 +74,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
             <input
               type="text"
               id="lastName"
+              data-testid="lastName"
               {...register('lastName', { required: true, minLength: 2 })}
             />
             {errors.lastName && (
@@ -89,6 +91,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
               type="tel"
               pattern="[0-9]{7,12}"
               id="phoneNumber"
+              data-testid="phoneNumber"
               {...register('phoneNumber', { required: true, pattern: /^\d{7,12}$/i })}
             />
             {errors.phoneNumber && (
@@ -104,6 +107,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
             <input
               type="email"
               id="email"
+              data-testid="email"
               {...register('email', { required: true, pattern: /^\S+@\S+$/i })}
             />
             {errors.email && <p className="error-message">Please enter correct email.</p>}
@@ -112,7 +116,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
         <div className="form__group">
           <label htmlFor="birthday">
             Birth date:
-            <input type="date" id="birthday" {...register('birthday', { required: true })} />
+            <input type="date" id="birthday" data-testid="birthday" {...register('birthday', { required: true })} />
             {errors.birthday && (
               <p className="error-message">
                 This field is required. Please choose your birth date.
@@ -145,6 +149,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
                 {...register('gender', { required: true })}
                 value="male"
                 id="male"
+                data-testid="male"
               />
               male
             </label>
@@ -171,7 +176,7 @@ const Form = ({ addToUsersList }: UserListProps) => {
         </div>
         <div className="form__group">
           <label htmlFor="photo">Photo:</label>
-          <input type="file" onChange={handleFileChange} required />
+          <input type="file" onChange={handleFileChange} required id="photo" data-testid="photo"/>
           {errors.photo && (
             <p className="error-message">This field is required. Download your image file.</p>
           )}
