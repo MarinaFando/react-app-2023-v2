@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import '../styles/SearchPanel.css';
 
 interface SearchPanelProps {
@@ -7,24 +8,18 @@ interface SearchPanelProps {
 }
 
 const SearchPanel = ({ fetchAndSetData, changeIsLoaded }: SearchPanelProps) => {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('searchValue', searchValue);
-    };
-  }, [searchValue]);
+  const searchValue = useAppSelector((state) => state.searchText.searchText);
+  const dispatch = useAppDispatch();
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.code === 'Enter') {
       changeIsLoaded();
-      localStorage.setItem('searchValue', searchValue);
       fetchAndSetData(searchValue);
     }
   };
 
   const onSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+    dispatch({ type: 'SET_SEARCH_TEXT', payload: e.target.value });
   };
 
   return (

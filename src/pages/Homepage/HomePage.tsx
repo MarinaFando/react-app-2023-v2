@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import SearchPanel from '../../components/SearchPanel';
-import { Character } from '../../caracterModel';
 import CardList from '../../components/CardList/CardList';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 const HomePage = () => {
-  const [characters, setCharacters] = useState<Character[]>([]);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const searchValue = useAppSelector((state) => state.searchText.searchText);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetchAndSetData(localStorage.getItem('searchValue') || '');
+    fetchAndSetData(searchValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchAndSetData = (searchValue = '') => {
+  const fetchAndSetData = (searchValue: string) => {
     fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
       .then((res) => res.json())
       .then((characters) => {
-        setCharacters(characters.results);
+        dispatch({ type: 'SET_SEARCH_RESULTS', payload: characters.results });
         setIsLoaded(true);
       });
   };
@@ -27,11 +29,7 @@ const HomePage = () => {
   return (
     <section>
       <SearchPanel fetchAndSetData={fetchAndSetData} changeIsLoaded={changeIsLoaded} />
-      {!isLoaded ? (
-        <div className="cardlist__block">Loading...</div>
-      ) : (
-        <CardList characters={characters} />
-      )}
+      {!isLoaded ? <div className="cardlist__block">Loading...</div> : <CardList />}
     </section>
   );
 };
