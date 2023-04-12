@@ -3,8 +3,10 @@ import { Character } from '../../caracterModel';
 import Card from '../Card/Card';
 import ModalCard from '../ModalCard/modalCard';
 import '../../styles/CardList.css';
+import { useAppSelector } from '../../redux/hooks';
 
-const CardList = ({ characters }: Character[]) => {
+const CardList = () => {
+  const characters: Character[] = useAppSelector((state) => state.searchResults.searchResults);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
 
