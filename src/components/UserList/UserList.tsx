@@ -1,7 +1,7 @@
 import React from 'react';
 import CardUser from '../CardUser/CardUser';
-import { User } from '../FormsLayout/FormsLayout';
 import '../../styles/UserList.css';
+import { User } from 'redux/reducers/usersList';
 
 interface UserListProps {
   usersList: User[];

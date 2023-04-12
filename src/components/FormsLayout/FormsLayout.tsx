@@ -1,23 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import UserList from '../UserList/UserList';
 import Form from '../Form/Form';
-
-export interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  phoneNumber: string;
-  email: string;
-  birthday: string;
-  country: string;
-  gender: string;
-  photo: string;
-  agree: boolean;
-}
-
-interface Users {
-  usersList: User[];
-}
+import { User } from '../../redux/reducers/usersList';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 
 export interface FormFields {
   firstName: HTMLInputElement;
@@ -32,7 +17,8 @@ export interface FormFields {
 }
 
 const FormsLayout = () => {
-  const [usersList, setUsersList] = useState<Users>([]);
+  const usersList = useAppSelector((state) => state.usersList.usersList);
+  const dispatch = useAppDispatch();
 
   const addToUsersList = ({
     firstName,
@@ -57,7 +43,7 @@ const FormsLayout = () => {
       photo,
       agree,
     };
-    setUsersList([...usersList, user]);
+    dispatch({ type: 'ADD_USER', payload: user });
     alert(`New user was added to list`);
   };
   return (
