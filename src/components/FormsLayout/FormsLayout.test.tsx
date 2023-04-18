@@ -1,10 +1,19 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import FormsLayout from './FormsLayout';
+import store from '../../redux/store';
+import { Provider } from 'react-redux';
+
+const renderWithRedux = (ui: React.ReactElement) => {
+  return {
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
+  };
+};
 
 describe('FormsLayout', () => {
   it('renders FormsLayout component', () => {
-    render(<FormsLayout />);
+    renderWithRedux(<FormsLayout />);
     expect(screen.getByText(/First Name:/i)).toBeInTheDocument();
     expect(screen.getByTestId('firstName').value).toBe('');
     expect(screen.getByText(/Last Name:/i)).toBeInTheDocument();

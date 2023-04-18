@@ -2,35 +2,22 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import HomePage from './HomePage';
 import fetch from 'node-fetch';
+import store from '../../redux/store';
+import { Provider } from 'react-redux';
 
-const localStorageMock = (function () {
-  let store: Store = {};
-
+const renderWithRedux = (ui: React.ReactElement) => {
   return {
-    getItem(key: string) {
-      return store[key];
-    },
-
-    setItem(key: string, value: string) {
-      store[key] = value;
-    },
-    clear() {
-      store = {};
-    },
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
   };
-})();
-
-beforeEach(async () => {
-  await localStorage.clear();
-});
+};
 
 describe('HomePage', () => {
   beforeEach(() => {
     global.fetch = fetch;
   });
-  it('save data in local storage', async () => {
-    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-    const { unmount } = render(<HomePage />);
+  it('save data in store', async () => {
+    const { unmount } = await renderWithRedux(<HomePage />);
     const inputField = screen.getByPlaceholderText(/Search.../i);
     expect(inputField).toBeInTheDocument();
     fireEvent.change(inputField, { target: { value: 'Naruto' } });
@@ -42,7 +29,7 @@ describe('HomePage', () => {
   });
 
   it('check all cards render', async () => {
-    const { container } = await render(<HomePage />);
+    const { container } = await renderWithRedux(<HomePage />);
     const buttons = await screen.findAllByRole('button');
     expect(buttons.length).toBeGreaterThan(0);
     const cards = container.getElementsByClassName('card');
@@ -51,7 +38,7 @@ describe('HomePage', () => {
   });
 
   it('check opening and closing modal window', async () => {
-    const { container } = await render(<HomePage />);
+    const { container } = await renderWithRedux(<HomePage />);
     await screen.findAllByRole('button');
     const cards = container.getElementsByClassName('card');
     fireEvent.click(cards[0]);
@@ -62,7 +49,7 @@ describe('HomePage', () => {
   });
 
   it('check opening and closing modal window by clicking outside', async () => {
-    const { container } = await render(<HomePage />);
+    const { container } = await renderWithRedux(<HomePage />);
     await screen.findAllByRole('button');
     const cards = container.getElementsByClassName('card');
     fireEvent.click(cards[0]);
