@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "node server",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --ssr src/entry-server.tsx --outDir dist/server",
+    "generate": "vite build --outDir dist/static && npm run build:server && node prerender",
     "preview": "vite preview",
     "lint": "eslint --ext .tsx .",
     "format": "npx prettier --write .",
@@ -19,8 +22,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.3",
+    "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dom-server": "^0.0.5",
     "react-hook-form": "^7.43.9",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0"
