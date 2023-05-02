@@ -1,18 +1,18 @@
-import ReactDOMServer from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import App from './App';
-import store from 'redux/store';
-import { createStore } from '@reduxjs/toolkit';
+import { setupStore } from './redux/store';
+import { Provider } from 'react-redux';
 
-export function render(url, context) {
-  const preloadedState = context.store.getState();
-  const storeForSSR = createStore(store.reducer, preloadedState);
+const storeSSR = setupStore();
 
-  return ReactDOMServer.renderToString(
-    <Provider store={storeForSSR}>
-      <StaticRouter location={url} context={context}>
+export function render(url, opts) {
+  return renderToPipeableStream(
+    <Provider store={storeSSR}>
+      <StaticRouter location={url}>
         <App />
       </StaticRouter>
-    </Provider>
+    </Provider>,
+    opts
   );
 }
